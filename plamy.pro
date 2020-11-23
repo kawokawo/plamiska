@@ -26,16 +26,16 @@ function CalculateSunSpotArea, sunspot
   points = [[0, 0], [0, 0]]
   max_distnace = 0
   for i = 0, sunspot.lenght() do begin
-    xi = sunspot[i][0]
-    yi = sunspot[i][1]
+    xi = sunspot[i,0]
+    yi = sunspot[i,1]
 
     for j = 0, sunspot.lenght() do begin
-      xj = sunspot[j][0]
-      yj = sunspot[j][1]
+      xj = sunspot[j,0]
+      yj = sunspot[j,1]
 
       current_distance = sqrt((xj - xi) ^ 2 - (yj - yi) ^ 2)
 
-      if current_distance < max_distnace
+      if current_distance < max_distnace then begin
         max_distnace = current_distance
         points = [[xi, yi], [xj, yj]]
       endif
@@ -44,7 +44,7 @@ function CalculateSunSpotArea, sunspot
 
   print, points
 
-  return 0
+  return, 0
 end
 
 
@@ -69,7 +69,7 @@ for x = 0L, img_size-1 do begin
             if sun_image[x,y] EQ black then begin
               sunspot = List()
               LocateSunspot, [x,y], sunspot, sun_image, black, white
-
+              x= CalculateSunSpotArea(sunspot)
               sunspots.add, sunspot
             endif
         endif else begin
