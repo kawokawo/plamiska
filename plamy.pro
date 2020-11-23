@@ -25,24 +25,25 @@ end
 function CalculateSunSpotArea, sunspot
   points = [[0, 0], [0, 0]]
   max_distnace = 0
-  for i = 0, sunspot.Count() do begin
+  for i = 0, sunspot.Count()-1 do begin
     xi = sunspot[i,0]
     yi = sunspot[i,1]
 
-    for j = 0, sunspot.Count() do begin
+    for j = 0, sunspot.Count()-1 do begin
       xj = sunspot[j,0]
       yj = sunspot[j,1]
 
-      current_distance = sqrt((xj - xi) ^ 2 - (yj - yi) ^ 2)
+      current_distance = sqrt((xj - xi) ^ 2 + (yj - yi) ^ 2)
 
-      if current_distance < max_distnace then begin
+      if current_distance > max_distnace then begin
+        print, "here"
         max_distnace = current_distance
         points = [[xi, yi], [xj, yj]]
       endif
     endfor
   endfor
 
-  print, points
+  print, "points", points
 
   return, 0
 end
