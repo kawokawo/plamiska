@@ -25,11 +25,11 @@ end
 function CalculateSunSpotArea, sunspot
   points = [[0, 0], [0, 0]]
   max_distnace = 0
-  for i = 0, sunspot.lenght() do begin
+  for i = 0, sunspot.Count() do begin
     xi = sunspot[i,0]
     yi = sunspot[i,1]
 
-    for j = 0, sunspot.lenght() do begin
+    for j = 0, sunspot.Count() do begin
       xj = sunspot[j,0]
       yj = sunspot[j,1]
 
@@ -69,7 +69,7 @@ for x = 0L, img_size-1 do begin
             if sun_image[x,y] EQ black then begin
               sunspot = List()
               LocateSunspot, [x,y], sunspot, sun_image, black, white
-              x= CalculateSunSpotArea(sunspot)
+              area = CalculateSunSpotArea(sunspot)
               sunspots.add, sunspot
             endif
         endif else begin
