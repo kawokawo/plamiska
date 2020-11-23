@@ -6,19 +6,17 @@
 ;WINDOW, 0, XSIZE=1024, YSIZE=1024
 
 
-pro LocateSunspot, current_point, sunspot, sun_image
+pro LocateSunspot, current_point, sunspot, sun_image, black, white
 FORWARD_FUNCTION LocateSunspot
-  black = 100
-  white = 180
   x = current_point[0]
   y = current_point[1]
   sun_image[x,y] = white
   sunspot.add, [x,y]
-  
+
   for i = x-1, x+1 do begin
     for j = y-1, y+1 do begin
       if sun_image[i, j] EQ black then begin
-        LocateSunspot, [i, j], sunspot, sun_image
+        LocateSunspot, [i, j], sunspot, sun_image, black, white
       endif
     endfor
   endfor
@@ -45,7 +43,7 @@ for x = 0L, img_size-1 do begin
         if sun_radius GT distance then begin
             if sun_image[x,y] EQ black then begin
               sunspot = List()
-              LocateSunspot, [x,y], sunspot, sun_image
+              LocateSunspot, [x,y], sunspot, sun_image, black, white
               sunspots.add, sunspot
             endif
         endif else begin
@@ -54,15 +52,6 @@ for x = 0L, img_size-1 do begin
     endfor
 endfor
 
-;for i = 0L, sunspots.count() do begin
-;  sunspot = sunspots[i]
-  
-;  for j = 0L, sunspot.count() do begin
-;    for k = 0L, sunspot.count() do begin
-;      
-;    endfor
-;  endfor
-;endfor
 
 
 img = IMAGE(sun_image,IMAGE_DIMENSIONS=[img_size, img_size],DIMENSIONS=[img_size, img_size])
