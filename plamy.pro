@@ -22,6 +22,31 @@ FORWARD_FUNCTION LocateSunspot
   endfor
 end
 
+function CalculateSunSpotArea, sunspot
+  points = [[0, 0], [0, 0]]
+  max_distnace = 0
+  for i = 0, sunspot.lenght() do begin
+    xi = sunspot[i][0]
+    yi = sunspot[i][1]
+
+    for j = 0, sunspot.lenght() do begin
+      xj = sunspot[j][0]
+      yj = sunspot[j][1]
+
+      current_distance = sqrt((xj - xi) ^ 2 - (yj - yi) ^ 2)
+
+      if current_distance < max_distnace
+        max_distnace = current_distance
+        points = [[xi, yi], [xj, yj]]
+      endif
+    endfor
+  endfor
+
+  print, points
+
+  return 0
+end
+
 
 READ_JPEG, 'C:\Users\Ryneqq\Desktop\plamiska\20120104_054500_1024_HMIIF.jpg', sun, /grayscale
 WINDOW, 0, XSIZE=1024, YSIZE=1024
@@ -44,6 +69,7 @@ for x = 0L, img_size-1 do begin
             if sun_image[x,y] EQ black then begin
               sunspot = List()
               LocateSunspot, [x,y], sunspot, sun_image, black, white
+
               sunspots.add, sunspot
             endif
         endif else begin
