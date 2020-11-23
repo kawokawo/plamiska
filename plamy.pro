@@ -52,16 +52,21 @@ function CalculateSunSpotArea, sunspot
 
   midx = (x1 + x2) / 2
   midy = (y1 + y2) / 2
+  print, "found midpoint", midx, midy
 
   a = (y2 - y1) / (x2 - x1)
   aprim = -1 / a
   bprim = midy - (midx * aprim)
+  print, "found function", "y =", aprim, "* x +", bprim
   max_distnace_2 = 0
 
   for i = 0, sunspot.Count() - 1 do begin
     xi = sunspot[i,0]
     yi = sunspot[i,1]
+
     if yi - aprim * xi EQ 0 then begin
+    ; if abs(yi - aprim * xi) LT 1 then begin
+      print, "i am calculating area"
       current_distance = sqrt((midx - xi) ^ 2 + (midy - yi) ^ 2)
 
       if current_distance > max_distnace_2 then begin
