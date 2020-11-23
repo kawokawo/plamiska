@@ -43,7 +43,7 @@ function CalculateSunSpotArea, sunspot
     endfor
   endfor
 
-  if max_distnace > 1 then return 0
+  if max_distnace > 1 then return, 0
 
   x1 = points[0, 0]
   x2 = points[1, 0]
@@ -61,7 +61,7 @@ function CalculateSunSpotArea, sunspot
   for i = 0, sunspot.Count() - 1 do begin
     xi = sunspot[i,0]
     yi = sunspot[i,1]
-    if yi - aprim * xi == 0 then begin
+    if yi - aprim * xi EQ 0 then begin
       current_distance = sqrt((midx - xi) ^ 2 + (midy - yi) ^ 2)
 
       if current_distance > max_distnace_2 then begin
