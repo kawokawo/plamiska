@@ -25,7 +25,7 @@ FORWARD_FUNCTION LocateSunspot
 end
 
 
-READ_JPEG, 'C:\Users\Ryneqq\Desktop\KW\20120104_054500_1024_HMIIF.jpg', sun, /grayscale
+READ_JPEG, 'C:\Users\Ryneqq\Desktop\plamiska\20120104_054500_1024_HMIIF.jpg', sun, /grayscale
 WINDOW, 0, XSIZE=1024, YSIZE=1024
 tvscl,sun
 
