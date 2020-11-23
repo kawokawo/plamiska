@@ -25,27 +25,52 @@ end
 function CalculateSunSpotArea, sunspot
   points = [[0, 0], [0, 0]]
   max_distnace = 0
-  for i = 0, sunspot.Count()-1 do begin
+
+  for i = 0, sunspot.Count() - 1 do begin
     xi = sunspot[i,0]
     yi = sunspot[i,1]
 
-    for j = 0, sunspot.Count()-1 do begin
+    for j = 0, sunspot.Count() - 1 do begin
       xj = sunspot[j,0]
       yj = sunspot[j,1]
 
       current_distance = sqrt((xj - xi) ^ 2 + (yj - yi) ^ 2)
 
       if current_distance > max_distnace then begin
-        print, "here"
         max_distnace = current_distance
         points = [[xi, yi], [xj, yj]]
       endif
     endfor
   endfor
 
-  print, "points", points
+  if max_distnace > 1 then return 0
 
-  return, 0
+  x1 = points[0, 0]
+  x2 = points[1, 0]
+  y1 = points[0, 1]
+  y2 = points[1, 1]
+
+  midx = (x1 + x2) / 2
+  midy = (y1 + y2) / 2
+
+  a = (y2 - y1) / (x2 - x1)
+  aprim = -1 / a
+  bprim = midy - (midx * aprim)
+  max_distnace_2 = 0
+
+  for i = 0, sunspot.Count() - 1 do begin
+    xi = sunspot[i,0]
+    yi = sunspot[i,1]
+    if yi - aprim * xi == 0 then begin
+      current_distance = sqrt((midx - xi) ^ 2 + (midy - yi) ^ 2)
+
+      if current_distance > max_distnace_2 then begin
+        max_distnace_2 = current_distance
+      endif
+    endif
+  endfor
+
+  return, max_distnace * max_distnace_2 * 2
 end
 
 
@@ -71,6 +96,7 @@ for x = 0L, img_size-1 do begin
               sunspot = List()
               LocateSunspot, [x,y], sunspot, sun_image, black, white
               area = CalculateSunSpotArea(sunspot)
+              print, "area", area
               sunspots.add, sunspot
             endif
         endif else begin
